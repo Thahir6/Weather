@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f2f4ee">
+    <meta name="description" content="A thoughtful field guide to the weather where you are and where you're headed.">
+    <title>Aeris Weather | Field notes for the sky</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <div class="weather-scene" id="weather-scene" data-weather="default">
+      <div class="weather-atmosphere" aria-hidden="true">
+        <span class="atmosphere-glow"></span>
+        <span class="atmosphere-cloud atmosphere-cloud-one"></span>
+        <span class="atmosphere-cloud atmosphere-cloud-two"></span>
+        <span class="atmosphere-precipitation"></span>
+        <span class="atmosphere-snow"></span>
+        <span class="atmosphere-stars"></span>
+      </div>
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Aeris Weather home">
+          <span class="brand-mark" aria-hidden="true"><span></span></span>
+          <span class="brand-name">aeris<span>.</span></span>
+        </a>
+        <div class="topbar-note"><span class="live-dot"></span> FIELD NOTES <span class="topbar-divider">/</span> ATMOSPHERE OBSERVED</div>
+        <button class="unit-switch" id="unit-switch" type="button" aria-label="Switch to Fahrenheit" title="Switch temperature units">°C <span>/</span> °F</button>
+      </header>
+
+      <main class="page-shell">
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-copy">
+            <p class="eyebrow">AERIS / ATMOSPHERIC REPORT</p>
+            <h1 id="page-title">Know the sky.<br><span>Go with it.</span></h1>
+            <p class="intro-subtitle">A considered look at the day, wherever it takes you.</p>
+          </div>
+          <div class="sky-art">
+            <img class="sky-image" src="https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=1200&q=85" alt="Dramatic storm clouds rolling across the sky" fetchpriority="high">
+            <div class="sky-wash" aria-hidden="true"></div>
+            <div class="sky-stamp" aria-hidden="true"><span class="stamp-symbol">↗</span><span><strong>LOOK UP</strong><small>THE WORLD, IN MOTION</small></span></div>
+            <div class="sky-caption"><span>01 / SKY STUDY</span><i></i></div>
+          </div>
+        </section>
+
+        <section class="search-section" aria-label="Find a location">
+          <form class="search-form" id="search-form">
+            <span class="search-icon" aria-hidden="true"></span>
+            <label class="visually-hidden" for="city-search">City or location</label>
+            <input id="city-search" name="city" type="search" role="combobox" aria-autocomplete="list" aria-haspopup="listbox" aria-expanded="false" aria-controls="city-suggestion-list" placeholder="Search for a city..." autocomplete="off" maxlength="100">
+            <button class="search-button" type="submit"><span>Search</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+            <div class="city-suggestions" id="city-suggestions" hidden>
+              <ul class="suggestion-list" id="city-suggestion-list" role="listbox" aria-label="City suggestions"></ul>
+              <p class="suggestion-status" id="suggestion-status" role="status" aria-live="polite" hidden></p>
+            </div>
+          </form>
+          <button class="location-button" id="location-button" type="button"><span class="location-icon" aria-hidden="true">◎</span> Use my location</button>
+          <p class="search-message" id="search-message" role="status" aria-live="polite"></p>
+          <div class="quick-searches" id="quick-searches" aria-label="Popular locations">
+            <span>TRY</span>
+            <button type="button" data-city="Tokyo">Tokyo</button>
+            <button type="button" data-city="Copenhagen">Copenhagen</button>
+            <button type="button" data-city="Hyderabad">Hyderabad</button>
+          </div>
+        </section>
+
+        <section class="weather-content" id="weather-content" hidden aria-live="polite">
+          <div class="current-layout">
+            <article class="current-card" id="current-card">
+              <div class="current-card-top">
+                <div class="place-block">
+                  <p class="eyebrow card-eyebrow">CURRENT CONDITIONS</p>
+                  <h2 id="place-name">—</h2>
+                  <p class="place-local-time" id="place-local-time"></p>
+                </div>
+                <span class="condition-pill" id="condition-pill">—</span>
+              </div>
+              <div class="temperature-row">
+                <img class="weather-icon" id="current-icon" alt="" width="104" height="104">
+                <div class="temperature" id="temperature">—<span>°</span></div>
+                <div class="condition-copy"><p id="condition-name">—</p><span id="condition-description">—</span></div>
+              </div>
+              <div class="feels-like">FEELS LIKE <strong id="feels-like">—</strong></div>
+            </article>
+
+            <section class="details-panel" aria-labelledby="details-title">
+              <div class="section-heading"><div><p class="eyebrow">THE DETAILS</p><h2 id="details-title">Right now</h2></div><span class="detail-live"><i></i> LIVE</span></div>
+              <div class="detail-grid">
+                <article class="detail-item"><span class="detail-symbol humidity-symbol" aria-hidden="true">◌</span><span class="detail-label">Humidity</span><strong id="humidity">—</strong></article>
+                <article class="detail-item"><span class="detail-symbol wind-symbol" aria-hidden="true">↗</span><span class="detail-label">Wind</span><strong id="wind">—</strong></article>
+                <article class="detail-item"><span class="detail-symbol pressure-symbol" aria-hidden="true">⌁</span><span class="detail-label">Pressure</span><strong id="pressure">—</strong></article>
+                <article class="detail-item"><span class="detail-symbol visibility-symbol" aria-hidden="true">◎</span><span class="detail-label">Visibility</span><strong id="visibility">—</strong></article>
+                <article class="detail-item"><span class="detail-symbol sunrise-symbol" aria-hidden="true">↗</span><span class="detail-label">Sunrise</span><strong id="sunrise">—</strong></article>
+                <article class="detail-item"><span class="detail-symbol sunset-symbol" aria-hidden="true">↘</span><span class="detail-label">Sunset</span><strong id="sunset">—</strong></article>
+              </div>
+            </section>
+          </div>
+
+          <section class="forecast-section" aria-labelledby="forecast-title">
+            <div class="section-heading forecast-heading"><div><p class="eyebrow">AHEAD OF THE WEATHER</p><h2 id="forecast-title">The next few days</h2></div><span class="forecast-note">5-DAY OUTLOOK</span></div>
+            <div class="forecast-grid" id="forecast-grid"></div>
+          </section>
+          <footer class="data-credit">WEATHER DATA BY OPENWEATHER <span>·</span> TEMPERATURES IN <span id="unit-label">CELSIUS</span></footer>
+        </section>
+
+        <div class="loading-panel" id="loading-panel" hidden role="status" aria-label="Loading weather">
+          <div class="loading-orbit"><span></span></div>
+          <div><strong>Looking up the sky</strong><p>Gathering the latest conditions...</p></div>
+        </div>
+      </main>
+      <div class="ambient-orb ambient-orb-one" aria-hidden="true"></div>
+      <div class="ambient-orb ambient-orb-two" aria-hidden="true"></div>
+    </div>
+  </body>
+</html>
