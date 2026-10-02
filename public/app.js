@@ -169,14 +169,25 @@ async function fetchSuggestions(query) {
   const controller = new AbortController();
   suggestionController = controller;
   try {
-    const response = await fetch(`/api/geocode?q=${encodeURIComponent(query)}`, {
+    const parameters = new URLSearchParams({ name: query, count: '10', language: 'en', format: 'json' });
+    const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?${parameters}`, {
       headers: { Accept: 'application/json' },
       signal: controller.signal
     });
     const data = await response.json();
     if (!response.ok) throw new Error(data.error || 'Location suggestions are unavailable.');
     if (controller.signal.aborted || searchInput.value.trim() !== query) return;
-    renderSuggestions(Array.isArray(data.locations) ? data.locations : [], query);
+    const locations = Array.isArray(data.results) ? data.results
+      .filter((place) => place.feature_code?.startsWith('PPL') && place.name && place.country && Number.isFinite(place.latitude) && Number.isFinite(place.longitude))
+      .slice(0, 5)
+      .map((place) => ({
+        name: place.name,
+        state: place.admin1 ?? place.admin2 ?? '',
+        country: place.country,
+        lat: place.latitude,
+        lon: place.longitude
+      })) : [];
+    renderSuggestions(locations, query);
   } catch (error) {
     if (error.name === 'AbortError') return;
     if (searchInput.value.trim() === query) showSuggestionStatus('Location suggestions are unavailable right now.', 'error');
